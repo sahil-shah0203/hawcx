@@ -1,0 +1,18 @@
+.link {
+  background-color: transparent;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: var(--spacer);
+  height: auto;
+  width: auto;
+  transition: color var(--transition) ease-out;
+}
+.link:hover {
+  color: var(--accent-light);
+  transition: color var(--transition) ease-in;
+}
+.link:disabled {
+  color: var(--muted);
+  transition: color var(--transition) ease-in;
+}

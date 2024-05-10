@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import Button from '../../components/Button'
 import Input from '../../components/Input'
@@ -9,6 +9,7 @@ import './styles.css'
 
 function SignUp(): React.JSX.Element {
   const [email, setEmail] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [name, setName] = useState<string>('')
 
   const navigate = useNavigate()
@@ -22,6 +23,8 @@ function SignUp(): React.JSX.Element {
       if (!(trimmedEmail && trimmedName)) {
         return null;
       }
+
+      setIsLoading(true)
 
       const challenge = new TextEncoder().encode(`${Date.now()}${randomString(32)}`)
       console.log(challenge)
@@ -45,15 +48,18 @@ function SignUp(): React.JSX.Element {
       try {
         const result = await navigator.credentials.create({ publicKey: options })
         console.log('result:\n', result)
+        setIsLoading(false)
         return navigate(ROUTES.home, { replace: true })
       } catch (error) {
-        console.log(error)
+        setIsLoading(false)
+        
+        console.log('err:', error, JSON.stringify(error))
       }
     },
     [
       email,
       name,
-      navigate,
+      navigate
     ]
   )
 
@@ -68,27 +74,33 @@ function SignUp(): React.JSX.Element {
       >
         <Input
           classes="mb-1"
+          disabled={isLoading}
           onChange={(event) => setEmail(event.currentTarget.value)}
           placeholder="Email address"
           type="email"
         />
         <Input
           classes="mb-1"
+          disabled={isLoading}
           onChange={(event) => setName(event.currentTarget.value)}
           placeholder="Name"
           type="text"
         />
         <Button
           classes="mb-1"
-          disabled={!(email.trim() && name.trim())}
+          disabled={!(email.trim() && name.trim()) || isLoading}
           type="submit"
         >
           Sign up
         </Button>
         <div className="flex j-center ns">
-          <Link to={ROUTES.index}>
+          <Button
+            disabled={isLoading}
+            isLink={true}
+            onClick={() => navigate(ROUTES.index)}
+          >
             Back to main page
-          </Link>
+          </Button>
         </div>
       </form>
     </div>
