@@ -2,6 +2,12 @@
 
 Browser biometric authentication demo
 
+WebAuthn documentation:
+
+https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/create
+
+https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/get
+
 ### Launch
 
 ```shell script
