@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import randomString from './utilities/random-string'
+import randomString from '../../utilities/random-string'
 
-import './App.css'
+import './styles.css'
 
 export default function App() {
   const [showSpinner, setShowSpinner] = useState<boolean>(true)
@@ -23,14 +23,12 @@ export default function App() {
   const handleSignIn = async () => {
     console.log('sign in')
 
-    const abortController = new AbortController()
     try {
       const result = await navigator.credentials.get({
         mediation: 'silent',
         publicKey: {
           challenge,
         },
-        signal: abortController.signal,
       })
       console.log(result)
     } catch (error) {
@@ -57,16 +55,13 @@ export default function App() {
       }
     }
 
-    const abortController = new AbortController()
     try {
       const result = await navigator.credentials.create({
         publicKey: options,
-        signal: abortController.signal,
       })
   
       console.log(result)
     } catch (error) {
-      abortController.abort()
       console.log(error)
     }
   }
