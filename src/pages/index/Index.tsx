@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import randomString from '../../utilities/random-string'
 
@@ -9,6 +10,8 @@ export default function App() {
   const [webAuthnIsAvailable, setWebAuthnIsAvailable] = useState<boolean>(false)
 
   const challenge = new TextEncoder().encode(`${Date.now()}${randomString(32)}`)
+
+  const navigate = useNavigate()
 
   useEffect(
     () => {
@@ -36,36 +39,6 @@ export default function App() {
     }
   }
 
-  const handleSignUp = async () => {
-    console.log('sign up')
-
-    const options: PublicKeyCredentialCreationOptions = {
-      challenge,
-      pubKeyCredParams: [{
-        alg: -7,
-        type: 'public-key'
-      }],
-      rp: {
-        name: 'WebAuthn demo'
-      },
-      user: {
-        displayName: 'Test user',
-        id: new TextEncoder().encode(randomString(32)),
-        name: 'test@email.com'
-      }
-    }
-
-    try {
-      const result = await navigator.credentials.create({
-        publicKey: options,
-      })
-  
-      console.log(result)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
     <div className="content">
       <h2>
@@ -80,7 +53,7 @@ export default function App() {
         <>
           { !webAuthnIsAvailable && (
             <div>
-              Your device does not support biometric authentication
+              Your device does not support biometric authentication!
             </div>
           ) }
           { webAuthnIsAvailable && (
@@ -88,7 +61,7 @@ export default function App() {
               <button onClick={handleSignIn}>
                 Sign in
               </button>
-              <button onClick={handleSignUp}>
+              <button onClick={() => navigate('/sign-up')}>
                 Sign up
               </button>
             </div>
