@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import Button from '../../components/Button'
 import Input from '../../components/Input'
 import randomString from '../../utilities/random-string'
-import { ROUTES, UNIT } from '../../constants'
+import { ROUTES } from '../../constants'
 
 function SignUp(): React.JSX.Element {
   const [email, setEmail] = useState<string>('')
@@ -56,7 +57,10 @@ function SignUp(): React.JSX.Element {
   )
 
   return (
-    <div>
+    <div className="flex d-col j-center page">
+      <div className="t-center mb-1 ns page-title">
+        Sign up
+      </div>
       <form
         onSubmit={handleFormSubmit}
         style={{
@@ -65,24 +69,23 @@ function SignUp(): React.JSX.Element {
         }}
       >
         <Input
+          classes="mb-1"
           onChange={(event) => setEmail(event.currentTarget.value)}
           placeholder="Email address"
-          styles={{
-            marginBottom: UNIT,
-          }}
           type="email"
         />
         <Input
+          classes="mb-1"
           onChange={(event) => setName(event.currentTarget.value)}
           placeholder="Name"
-          styles={{
-            marginBottom: UNIT,
-          }}
           type="text"
         />
-        <button type="submit">
+        <Button
+          disabled={!(email.trim() && name.trim())}
+          type="submit"
+        >
           Sign up
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import randomString from '../../utilities/random-string'
 
 import './styles.css'
 
-export default function App() {
+function Index(): React.JSX.Element {
   const [showSpinner, setShowSpinner] = useState<boolean>(true)
   const [webAuthnIsAvailable, setWebAuthnIsAvailable] = useState<boolean>(false)
 
@@ -71,3 +71,5 @@ export default function App() {
     </div>
   )
 }
+
+export default Index

@@ -1,10 +1,10 @@
 import React from 'react'
 
-import './styles.css'
-
 type InputType = 'email' | 'number' | 'text'
 
 interface InputProps {
+  classes?: string;
+  disabled?: boolean;
   name?: string;
   onChange: (event: React.FormEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -14,16 +14,19 @@ interface InputProps {
 
 function Input(props: InputProps): React.JSX.Element {
   const {
-    name,
+    classes = '',
+    disabled = false,
+    name = '',
     onChange,
-    placeholder,
+    placeholder = '',
     styles = {},
     type = 'text'
   } = props
 
   return (
     <input
-      className="input"
+      className={`input styled-input${classes ? ` ${classes}` : ''}`}
+      disabled={disabled}
       name={name}
       onChange={onChange}
       placeholder={placeholder}

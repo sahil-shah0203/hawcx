@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import Index from '../pages/index/Index'
-import SignUp from '../pages/sign-up/SignUp'
+import Index from '../pages/index'
+import SignUp from '../pages/sign-up'
 
 const router = createBrowserRouter([
   {

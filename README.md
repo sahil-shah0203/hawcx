@@ -1,6 +1,6 @@
-## js-biometrics
+## webauthn-demo
 
-Browser biometric authentication demo
+WebAuthn demo with biometric authentication (Face ID / fingerprint)
 
 WebAuthn documentation:
 
