@@ -1,7 +1,6 @@
-.page {
-  height: 100vh;
-}
 .page-title {
-  font-size: calc(var(--spacer) * 2.5);
-  font-weight: 400;
+  font-size: calc(var(--spacer) * 3);
+  font-weight: 100;
+  letter-spacing: calc(var(--spacer-quarter));
+  text-transform: uppercase;
 }

@@ -1,4 +1,5 @@
 export const ROUTES = {
+  home: '/home',
   index: '/',
   signUp: '/sign-up'
 }

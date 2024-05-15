@@ -3,6 +3,7 @@ import React from 'react'
 type ButtonType = 'button' | 'submit'
 
 interface ButtonProps {
+  classes?: string;
   disabled?: boolean;
   onClick?: () => void;
   type?: ButtonType;
@@ -11,6 +12,7 @@ interface ButtonProps {
 function Button(props: React.PropsWithChildren<ButtonProps>): React.JSX.Element {
   const {
     children,
+    classes = '',
     disabled = false,
     onClick = null,
     type = 'button'
@@ -18,7 +20,7 @@ function Button(props: React.PropsWithChildren<ButtonProps>): React.JSX.Element 
 
   return (
     <button
-      className="button ns"
+      className={`button ns${classes ? ` ${classes}` : ''}`}
       disabled={disabled}
       onClick={onClick || (() => null)}
       type={type}
