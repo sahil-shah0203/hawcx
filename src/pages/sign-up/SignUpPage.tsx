@@ -2,8 +2,10 @@ import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Button from '../../components/Button'
+import { getValue, storeValue } from '../../utilities/persistent-store'
 import Input from '../../components/Input'
 import randomString from '../../utilities/random-string'
+import type { RegisteredUser } from '../../models'
 import { ROUTES } from '../../constants'
 import './styles.css'
 
@@ -26,8 +28,9 @@ function SignUp(): React.JSX.Element {
 
       setIsLoading(true)
 
-      const challenge = new TextEncoder().encode(`${Date.now()}${randomString(32)}`)
-      console.log(challenge)
+      const challengePlaintext = `${Date.now()}${randomString(32)}`
+      const challenge = new TextEncoder().encode(challengePlaintext)
+      console.log(challengePlaintext)
     
       const options: PublicKeyCredentialCreationOptions = {
         challenge,
@@ -49,6 +52,23 @@ function SignUp(): React.JSX.Element {
         const result = await navigator.credentials.create({ publicKey: options })
         console.log('result:\n', result)
         setIsLoading(false)
+
+        const registeredUser: RegisteredUser = {
+          challengePlaintext,
+          createdAt: Date.now(),
+          email: trimmedEmail,
+          id: result?.id || '',
+          name: trimmedName,
+        }
+        const existingUsers = getValue<RegisteredUser[]>('users') || []
+        storeValue<RegisteredUser[]>(
+          'users',
+          [
+            ...existingUsers,
+            registeredUser,
+          ]
+        )
+
         return navigate(ROUTES.home, { replace: true })
       } catch (error) {
         setIsLoading(false)

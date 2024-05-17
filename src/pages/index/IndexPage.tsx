@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import Button from '../../components/Button'
 import randomString from '../../utilities/random-string'
-
+import { ROUTES } from '../../constants'
 import './styles.css'
 
 function Index(): React.JSX.Element {
-  const [showSpinner, setShowSpinner] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [webAuthnIsAvailable, setWebAuthnIsAvailable] = useState<boolean>(false)
 
   const challenge = new TextEncoder().encode(`${Date.now()}${randomString(32)}`)
@@ -18,7 +19,7 @@ function Index(): React.JSX.Element {
       if (navigator.credentials && typeof(PublicKeyCredential) !== 'undefined') {
         setWebAuthnIsAvailable(true)
       }
-      setTimeout(() => setShowSpinner(false), 500)
+      setTimeout(() => setIsLoading(false), 500)
     },
     [],
   )
@@ -40,31 +41,37 @@ function Index(): React.JSX.Element {
   }
 
   return (
-    <div className="content">
-      <h2>
-        Browser biometric authentication demo
-      </h2>
-      { showSpinner && (
+    <div className="flex d-col j-center mh-auto h-100vh width">
+      <div className="page-title ns t-center">
+        WebAuthn
+      </div>
+      { isLoading && (
         <div>
           Loading...
         </div>
       ) }
-      { !showSpinner && (
+      { !isLoading && (
         <>
           { !webAuthnIsAvailable && (
-            <div>
+            <div className="not-supported ns t-center mt-2">
               Your device does not support biometric authentication!
             </div>
           ) }
           { webAuthnIsAvailable && (
-            <div className="row">
-              <button onClick={handleSignIn}>
+            <>
+              <Button
+                classes="mt-2"
+                onClick={handleSignIn}
+              >
                 Sign in
-              </button>
-              <button onClick={() => navigate('/sign-up')}>
+              </Button>
+              <Button
+                classes="mt-1"
+                onClick={() => navigate(ROUTES.signUp)}
+              >
                 Sign up
-              </button>
-            </div>
+              </Button>
+            </>
           ) }
         </>
       ) }
