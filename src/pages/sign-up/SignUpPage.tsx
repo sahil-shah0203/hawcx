@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import type { AuthorizedUser, RegisteredUser } from '../../models'
 import Button from '../../components/Button'
 import { getValue, storeValue } from '../../utilities/persistent-store'
 import Input from '../../components/Input'
 import randomString from '../../utilities/random-string'
-import type { RegisteredUser } from '../../models'
 import { ROUTES } from '../../constants'
 import './styles.css'
 import Spinner from '../../components/Spinner'
@@ -68,6 +68,13 @@ function SignUp(): React.JSX.Element {
             ...existingUsers,
             registeredUser,
           ]
+        )
+        storeValue<AuthorizedUser>(
+          'authorized-user',
+          {
+            id: result?.id || '',
+            isAuthorized: true
+          }
         )
 
         return navigate(ROUTES.home, { replace: true })

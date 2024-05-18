@@ -7,3 +7,8 @@
   letter-spacing: calc(var(--spacer-quarter));
   text-transform: uppercase;
 }
+.width {
+  max-width: calc(var(--spacer) * 40);
+  min-width: calc(var(--spacer) * 20);
+  width: 50%;
+}

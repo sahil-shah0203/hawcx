@@ -1,0 +1,4 @@
+.subtitle {
+  color: var(--muted);
+  font-size: calc(var(--spacer) + var(--spacer-quarter));
+}

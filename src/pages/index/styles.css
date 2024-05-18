@@ -7,8 +7,3 @@
   font-size: calc(var(--spacer) + var(--spacer-quarter));
   font-weight: 300;
 }
-.width {
-  max-width: calc(var(--spacer) * 40);
-  min-width: calc(var(--spacer) * 20);
-  width: 50%;
-}

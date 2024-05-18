@@ -1,7 +1,11 @@
-type ValueKey = 'users' 
+type ValueKey = 'authorized-user' | 'users'
 
 interface ValueObject<T> {
   value: T;
+}
+
+export function deleteValue(key: ValueKey) {
+  localStorage.removeItem(key)
 }
 
 export function getValue<T>(key: ValueKey): T | null {
