@@ -8,6 +8,7 @@ import randomString from '../../utilities/random-string'
 import type { RegisteredUser } from '../../models'
 import { ROUTES } from '../../constants'
 import './styles.css'
+import Spinner from '../../components/Spinner'
 
 function SignUp(): React.JSX.Element {
   const [email, setEmail] = useState<string>('')
@@ -106,13 +107,20 @@ function SignUp(): React.JSX.Element {
           placeholder="Name"
           type="text"
         />
-        <Button
-          classes="mb-1"
-          disabled={!(email.trim() && name.trim()) || isLoading}
-          type="submit"
-        >
-          Sign up
-        </Button>
+        { isLoading && (
+          <div className="f j-center">
+            <Spinner />
+          </div>
+        ) }
+        { !isLoading && (
+          <Button
+            classes="mb-1"
+            disabled={!(email.trim() && name.trim()) || isLoading}
+            type="submit"
+          >
+            Sign up
+          </Button>
+        ) }
         <div className="flex j-center ns">
           <Button
             disabled={isLoading}

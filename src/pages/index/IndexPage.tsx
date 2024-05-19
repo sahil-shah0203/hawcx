@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import randomString from '../../utilities/random-string'
 import { ROUTES } from '../../constants'
+import Spinner from '../../components/Spinner'
 import './styles.css'
 
 function Index(): React.JSX.Element {
@@ -46,8 +47,8 @@ function Index(): React.JSX.Element {
         WebAuthn
       </div>
       { isLoading && (
-        <div>
-          Loading...
+        <div className="f j-center mt-2">
+          <Spinner />
         </div>
       ) }
       { !isLoading && (

@@ -1,0 +1,70 @@
+.loader {
+  border-radius: 50%;
+  color: var(--accent);
+  height: calc(var(--spacer) * 3);
+  perspective: 1000px;
+  transform: rotateZ(45deg);
+  width: calc(var(--spacer) * 3);
+}
+.loader:before, .loader:after {
+  animation: 1s spin linear infinite;
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: inherit;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: rotateX(70deg);
+  width: inherit;
+  }
+.loader:after {
+  animation-delay: .4s;
+  color: var(--accent);
+  transform: rotateY(70deg);
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
+}
+
+@keyframes rotateccw {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes spin {
+  0%, 100% {
+    box-shadow: .2em 0px 0 0px currentcolor;
+  }
+  12% {
+    box-shadow: .2em .2em 0 0 currentcolor;
+  }
+  25% {
+    box-shadow: 0 .2em 0 0px currentcolor;
+  }
+  37% {
+    box-shadow: -.2em .2em 0 0 currentcolor;
+  }
+  50% {
+    box-shadow: -.2em 0 0 0 currentcolor;
+  }
+  62% {
+    box-shadow: -.2em -.2em 0 0 currentcolor;
+  }
+  75% {
+    box-shadow: 0px -.2em 0 0 currentcolor;
+  }
+  87% {
+    box-shadow: .2em -.2em 0 0 currentcolor;
+  }
+}
