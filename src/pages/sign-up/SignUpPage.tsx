@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import type { AuthorizedUser, RegisteredUser } from '../../models'
 import Button from '../../components/Button'
+import createChallenge from '../../utilities/challenge'
 import { getValue, storeValue } from '../../utilities/persistent-store'
 import Input from '../../components/Input'
 import randomString from '../../utilities/random-string'
@@ -29,9 +30,7 @@ function SignUp(): React.JSX.Element {
 
       setIsLoading(true)
 
-      const challengePlaintext = `${Date.now()}${randomString(32)}`
-      const challenge = new TextEncoder().encode(challengePlaintext)
-      console.log(challengePlaintext)
+      const { encoded: challenge, plaintext } = createChallenge()
     
       const options: PublicKeyCredentialCreationOptions = {
         challenge,
@@ -51,11 +50,10 @@ function SignUp(): React.JSX.Element {
   
       try {
         const result = await navigator.credentials.create({ publicKey: options })
-        console.log('result:\n', result)
         setIsLoading(false)
 
         const registeredUser: RegisteredUser = {
-          challengePlaintext,
+          challengePlaintext: plaintext,
           createdAt: Date.now(),
           email: trimmedEmail,
           id: result?.id || '',

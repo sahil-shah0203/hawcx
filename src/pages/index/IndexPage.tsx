@@ -5,12 +5,14 @@ import type { AuthorizedUser } from '../../models'
 import Button from '../../components/Button'
 import createChallenge from '../../utilities/challenge'
 import { getValue, storeValue } from '../../utilities/persistent-store'
+import isMobile from '../../utilities/is-mobile'
 import { ROUTES } from '../../constants'
 import Spinner from '../../components/Spinner'
 import './styles.css'
 
 function Index(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [mobile, setMobile] = useState<boolean>(false)
   const [webAuthnIsAvailable, setWebAuthnIsAvailable] = useState<boolean>(false)
 
   const { encoded: challenge } = createChallenge()
@@ -42,6 +44,11 @@ function Index(): React.JSX.Element {
       if (navigator.credentials && typeof(PublicKeyCredential) !== 'undefined') {
         setWebAuthnIsAvailable(true)
       }
+
+      if (isMobile()) {
+        setMobile(true)
+      }
+
       setTimeout(() => setIsLoading(false), 500)
 
       if (getValue<AuthorizedUser>('authorized-user')) {
@@ -52,7 +59,7 @@ function Index(): React.JSX.Element {
   )
 
   return (
-    <div className="flex d-col j-center mh-auto page width">
+    <div className={`flex d-col j-center mh-auto page${mobile ? '-mobile' : ''} width`}>
       <div className="flex d-col mh-auto width content">
         <div className="page-title ns t-center">
           WebAuthn

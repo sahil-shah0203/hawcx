@@ -3,10 +3,8 @@ import React from 'react'
 import './styles.css'
 
 function Footer(): React.JSX.Element {
-  const year = new Date().getFullYear()
-
   return (
-    <div className="flex j-center ai-center ns footer">
+    <div className="f f-wrap j-center ai-center ph-1 ns footer">
       <span>
         <a
           href="https://github.com/peterdee/webauthn-demo"
@@ -15,11 +13,22 @@ function Footer(): React.JSX.Element {
           WebAuthn demo
         </a>
       </span>
-      <span className="ml-1">
+      <span className="ml-half">
+        by
+      </span>
+      <span className="ml-half">
+        <a
+          href="https://github.com/peterdee"
+          target="_blank"
+        >
+          Peter Dyumin
+        </a>
+      </span>
+      <span className="ml-half">
         ©
       </span>
-      <span className="ml-1">
-        { year }
+      <span className="ml-half">
+        { new Date().getFullYear() }
       </span>
     </div>
   )
