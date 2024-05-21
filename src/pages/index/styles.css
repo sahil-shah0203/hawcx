@@ -1,3 +1,7 @@
+.content {
+  height: calc(var(--spacer) * 14);
+  padding: var(--spacer) 0;
+}
 .not-supported {
   color: var(--error);
   font-size: calc(var(--spacer) + var(--spacer-quarter));

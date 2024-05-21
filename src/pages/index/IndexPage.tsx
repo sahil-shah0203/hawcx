@@ -37,45 +37,48 @@ function Index(): React.JSX.Element {
       })
       console.log(result)
     } catch (error) {
-      console.log(error)
+      const typedError = error as Error;
+      console.log('err:', error, typeof error, JSON.stringify(error), typedError.message)
     }
   }
 
   return (
     <div className="flex d-col j-center mh-auto h-100vh width">
-      <div className="page-title ns t-center">
-        WebAuthn
-      </div>
-      { isLoading && (
-        <div className="f j-center mt-2">
-          <Spinner />
+      <div className="flex d-col width content">
+        <div className="page-title ns t-center">
+          WebAuthn
         </div>
-      ) }
-      { !isLoading && (
-        <>
-          { !webAuthnIsAvailable && (
-            <div className="not-supported ns t-center mt-2">
-              Your device does not support biometric authentication!
-            </div>
-          ) }
-          { webAuthnIsAvailable && (
-            <>
-              <Button
-                classes="mt-2"
-                onClick={handleSignIn}
-              >
-                Sign in
-              </Button>
-              <Button
-                classes="mt-1"
-                onClick={() => navigate(ROUTES.signUp)}
-              >
-                Sign up
-              </Button>
-            </>
-          ) }
-        </>
-      ) }
+        { isLoading && (
+          <div className="f j-center mt-2">
+            <Spinner />
+          </div>
+        ) }
+        { !isLoading && (
+          <>
+            { !webAuthnIsAvailable && (
+              <div className="not-supported ns t-center mt-2">
+                Your device does not support biometric authentication!
+              </div>
+            ) }
+            { webAuthnIsAvailable && (
+              <>
+                <Button
+                  classes="mt-2"
+                  onClick={handleSignIn}
+                >
+                  Sign in
+                </Button>
+                <Button
+                  classes="mt-1"
+                  onClick={() => navigate(ROUTES.signUp)}
+                >
+                  Sign up
+                </Button>
+              </>
+            ) }
+          </>
+        ) }
+      </div>
     </div>
   )
 }
