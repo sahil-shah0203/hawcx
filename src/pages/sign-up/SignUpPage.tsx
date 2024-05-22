@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import type { AuthorizedUser, RegisteredUser } from '../../models'
 import Button from '../../components/Button'
 import createChallenge from '../../utilities/challenge'
+import ErrorModal from '../../components/ErrorModal'
 import { getValue, storeValue } from '../../utilities/persistent-store'
 import Input from '../../components/Input'
 import randomString from '../../utilities/random-string'
@@ -15,6 +16,7 @@ function SignUp(): React.JSX.Element {
   const [email, setEmail] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [name, setName] = useState<string>('')
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(true)
 
   const navigate = useNavigate()
 
@@ -78,6 +80,7 @@ function SignUp(): React.JSX.Element {
         return navigate(ROUTES.home, { replace: true })
       } catch (error) {
         setIsLoading(false)
+        setShowErrorModal(true)
         
         console.log('err:', error, JSON.stringify(error))
       }
@@ -91,6 +94,9 @@ function SignUp(): React.JSX.Element {
 
   return (
     <div className="flex d-col j-center mh-auto page width">
+      { showErrorModal && (
+        <ErrorModal />
+      ) }
       <div className="t-center mb-1 ns page-title">
         Sign up
       </div>
