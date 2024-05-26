@@ -43,8 +43,8 @@ function Index(): React.JSX.Element {
   }
 
   return (
-    <div className="flex d-col j-center mh-auto h-100vh width">
-      <div className="flex d-col width content">
+    <div className="flex d-col j-center mh-auto page width">
+      <div className="flex d-col mh-auto width content">
         <div className="page-title ns t-center">
           WebAuthn
         </div>

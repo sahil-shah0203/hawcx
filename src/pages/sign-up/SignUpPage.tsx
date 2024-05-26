@@ -85,7 +85,7 @@ function SignUp(): React.JSX.Element {
   )
 
   return (
-    <div className="flex d-col j-center h-100vh">
+    <div className="flex d-col j-center mh-auto page width">
       <div className="t-center mb-1 ns page-title">
         Sign up
       </div>
