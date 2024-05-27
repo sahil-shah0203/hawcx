@@ -36,6 +36,7 @@ function Index(): React.JSX.Element {
         },
       })
       console.log(result)
+      return navigate(ROUTES.home)
     } catch (error) {
       const typedError = error as Error;
       console.log('err:', error, typeof error, JSON.stringify(error), typedError.message)
