@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { AuthorizedUser, RegisteredUser } from '../../models'
+import type { AuthorizedUser, RegisteredUser } from '../../models'
 import Button from '../../components/Button'
 import { deleteValue, getValue } from '../../utilities/persistent-store'
 import { ROUTES } from '../../constants'
-
 import './styles.css'
 
 function Home(): React.JSX.Element {
@@ -22,7 +21,7 @@ function Home(): React.JSX.Element {
     () => {
       const authorizedUser = getValue<AuthorizedUser>('authorized-user')
       if (!authorizedUser) {
-        return navigate(ROUTES.signUp)
+        return navigate(ROUTES.index)
       }
       const registeredUsersArray = getValue<RegisteredUser[]>('users')
       if (!registeredUsersArray) {

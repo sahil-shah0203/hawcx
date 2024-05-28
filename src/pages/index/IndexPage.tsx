@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import type { AuthorizedUser } from '../../models'
 import Button from '../../components/Button'
-import randomString from '../../utilities/random-string'
+import createChallenge from '../../utilities/challenge'
+import { getValue, storeValue } from '../../utilities/persistent-store'
 import { ROUTES } from '../../constants'
 import Spinner from '../../components/Spinner'
 import './styles.css'
@@ -11,19 +13,9 @@ function Index(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [webAuthnIsAvailable, setWebAuthnIsAvailable] = useState<boolean>(false)
 
-  const challenge = new TextEncoder().encode(`${Date.now()}${randomString(32)}`)
+  const { encoded: challenge } = createChallenge()
 
   const navigate = useNavigate()
-
-  useEffect(
-    () => {
-      if (navigator.credentials && typeof(PublicKeyCredential) !== 'undefined') {
-        setWebAuthnIsAvailable(true)
-      }
-      setTimeout(() => setIsLoading(false), 500)
-    },
-    [],
-  )
 
   const handleSignIn = async () => {
     console.log('sign in')
@@ -31,17 +23,33 @@ function Index(): React.JSX.Element {
     try {
       const result = await navigator.credentials.get({
         mediation: 'silent',
-        publicKey: {
-          challenge,
-        },
+        publicKey: { challenge }
       })
-      console.log(result)
+
+      storeValue<AuthorizedUser>('authorized-user', {
+        id: result?.id || '',
+        isAuthorized: true,
+      })
       return navigate(ROUTES.home)
     } catch (error) {
       const typedError = error as Error;
       console.log('err:', error, typeof error, JSON.stringify(error), typedError.message)
     }
   }
+
+  useEffect(
+    () => {
+      if (navigator.credentials && typeof(PublicKeyCredential) !== 'undefined') {
+        setWebAuthnIsAvailable(true)
+      }
+      setTimeout(() => setIsLoading(false), 500)
+
+      if (getValue<AuthorizedUser>('authorized-user')) {
+        return navigate(ROUTES.home)
+      }
+    },
+    [navigate],
+  )
 
   return (
     <div className="flex d-col j-center mh-auto page width">

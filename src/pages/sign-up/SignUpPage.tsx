@@ -7,8 +7,8 @@ import { getValue, storeValue } from '../../utilities/persistent-store'
 import Input from '../../components/Input'
 import randomString from '../../utilities/random-string'
 import { ROUTES } from '../../constants'
-import './styles.css'
 import Spinner from '../../components/Spinner'
+import './styles.css'
 
 function SignUp(): React.JSX.Element {
   const [email, setEmail] = useState<string>('')
