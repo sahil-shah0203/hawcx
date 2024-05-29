@@ -1,8 +1,5 @@
 .page {
-  height: calc(100vh - var(--spacer) * 3);
-}
-.page-mobile {
-  height: 100%;
+  height: calc(100dvh - var(--spacer) * 3);
 }
 .page-title {
   font-size: calc(var(--spacer) * 3);
