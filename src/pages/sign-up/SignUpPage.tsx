@@ -16,7 +16,7 @@ function SignUp(): React.JSX.Element {
   const [email, setEmail] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [name, setName] = useState<string>('')
-  const [showErrorModal, setShowErrorModal] = useState<boolean>(true)
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false)
 
   const navigate = useNavigate()
 
@@ -66,7 +66,7 @@ function SignUp(): React.JSX.Element {
           'users',
           [
             ...existingUsers,
-            registeredUser,
+            registeredUser
           ]
         )
         storeValue<AuthorizedUser>(
@@ -80,9 +80,7 @@ function SignUp(): React.JSX.Element {
         return navigate(ROUTES.home, { replace: true })
       } catch (error) {
         setIsLoading(false)
-        setShowErrorModal(true)
-        
-        console.log('err:', error, JSON.stringify(error))
+        return setShowErrorModal(true)
       }
     },
     [
@@ -95,7 +93,9 @@ function SignUp(): React.JSX.Element {
   return (
     <div className="flex d-col j-center mh-auto page width">
       { showErrorModal && (
-        <ErrorModal />
+        <ErrorModal
+          closeModal={() => setShowErrorModal(false)}
+        />
       ) }
       <div className="t-center mb-1 ns page-title">
         Sign up

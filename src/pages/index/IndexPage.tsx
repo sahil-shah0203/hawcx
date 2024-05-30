@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import type { AuthorizedUser } from '../../models'
 import Button from '../../components/Button'
 import createChallenge from '../../utilities/challenge'
+import ErrorModal from '../../components/ErrorModal'
 import { getValue, storeValue } from '../../utilities/persistent-store'
 import { ROUTES } from '../../constants'
 import Spinner from '../../components/Spinner'
@@ -11,6 +12,7 @@ import './styles.css'
 
 function Index(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false)
   const [webAuthnIsAvailable, setWebAuthnIsAvailable] = useState<boolean>(false)
 
   const { encoded: challenge } = createChallenge()
@@ -32,8 +34,7 @@ function Index(): React.JSX.Element {
       })
       return navigate(ROUTES.home)
     } catch (error) {
-      const typedError = error as Error;
-      console.log('err:', error, typeof error, JSON.stringify(error), typedError.message)
+      return setShowErrorModal(true)
     }
   }
 
@@ -54,6 +55,11 @@ function Index(): React.JSX.Element {
   return (
     <div className="flex d-col j-center mh-auto page width">
       <div className="flex d-col mh-auto width content">
+        { showErrorModal && (
+          <ErrorModal
+            closeModal={() => setShowErrorModal(false)}
+          />
+        ) }
         <div className="page-title ns t-center">
           WebAuthn
         </div>

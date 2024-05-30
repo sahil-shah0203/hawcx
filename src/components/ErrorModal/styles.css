@@ -8,8 +8,14 @@
   width: 100dvw;
   z-index: 10;
 }
+.error-title {
+  color: var(--error);
+  font-size: calc(var(--spacer) + var(--spacer-half));
+  font-weight: 300;
+}
 .foreground {
   background-color: var(--background);
+  border-radius: var(--spacer-quarter);
   height: calc(var(--spacer) * 16);
   position: fixed;
   width: calc(var(--spacer) * 20);

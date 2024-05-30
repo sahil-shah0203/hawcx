@@ -1,12 +1,27 @@
 import React from 'react'
 
+import Button from '../Button'
 import './styles.css'
 
-function ErrorModal(): React.JSX.Element {
+interface ErrorModalProps {
+  closeModal: () => void;
+}
+
+function ErrorModal(props: ErrorModalProps): React.JSX.Element {
+  const { closeModal } = props;
+
   return (
     <div className="f d-col j-center ai-center background">
-      <div className="f d-col p-1 foreground">
-        Modal
+      <div className="f d-col j-space-between p-1 ns foreground">
+        <div className="t-center error-title">
+          WebAuthn error
+        </div>
+        <div>
+          Operation was cancelled or there was an error with WebAuthn authentication!
+        </div>
+        <Button onClick={closeModal}>
+          Close
+        </Button>
       </div>
     </div>
   )
