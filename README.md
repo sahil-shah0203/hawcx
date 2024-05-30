@@ -8,6 +8,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/create
 
 https://developer.mozilla.org/en-US/docs/Web/API/CredentialsContainer/get
 
+Assertion check is not featured in this project, current example can be used as a replacement for TOTP or other 2FA / MFA solutions
+
 ### Deploy
 
 ```shell script

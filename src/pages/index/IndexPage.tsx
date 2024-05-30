@@ -20,8 +20,6 @@ function Index(): React.JSX.Element {
   const navigate = useNavigate()
 
   const handleSignIn = async () => {
-    console.log('sign in')
-
     try {
       const result = await navigator.credentials.get({
         mediation: 'silent',
