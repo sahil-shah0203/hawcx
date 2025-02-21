@@ -47,7 +47,7 @@ function Index(): React.JSX.Element {
           />
         ) }
         <div className="page-title ns t-center">
-          WebAuthn
+          Auth
         </div>
         { isLoading && (
           <div className="f j-center mt-2">

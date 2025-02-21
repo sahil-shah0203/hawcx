@@ -22,16 +22,16 @@ function SignUp(): React.JSX.Element {
   const handleFormSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-
+  
       const trimmedEmail = email.trim();
       if (!trimmedEmail) {
         return null;
       }
-
+  
       setIsLoading(true);
-
+  
       const { encoded: challenge, plaintext } = createChallenge();
-
+  
       const options: PublicKeyCredentialCreationOptions = {
         challenge,
         pubKeyCredParams: [
@@ -47,13 +47,18 @@ function SignUp(): React.JSX.Element {
           id: new TextEncoder().encode(randomString(32)),
           name: email,
           displayName: email,
-        },        
+        },
+        authenticatorSelection: {
+          authenticatorAttachment: "platform", // ✅ Force Windows Hello, block passkeys
+          requireResidentKey: false, // ✅ Avoid storing credentials as passkeys
+          userVerification: "required",
+        },
       };
-
+  
       try {
         const result = await navigator.credentials.create({ publicKey: options });
         setIsLoading(false);
-
+  
         const registeredUser: RegisteredUser = {
           challengePlaintext: plaintext,
           createdAt: Date.now(),
@@ -62,12 +67,12 @@ function SignUp(): React.JSX.Element {
         };
         const existingUsers = getValue<RegisteredUser[]>("users") || [];
         storeValue<RegisteredUser[]>("users", [...existingUsers, registeredUser]);
-
+  
         storeValue<AuthorizedUser>("authorized-user", {
           id: result?.id || "",
           isAuthorized: true,
         });
-
+  
         return navigate(ROUTES.home, { replace: true });
       } catch (error) {
         setIsLoading(false);
@@ -75,7 +80,7 @@ function SignUp(): React.JSX.Element {
       }
     },
     [email, navigate]
-  );
+  );  
 
   return (
     <div className="flex d-col j-center mh-auto page width">
@@ -85,6 +90,7 @@ function SignUp(): React.JSX.Element {
         <Input
           classes="mb-1"
           disabled={isLoading}
+          value={email}
           onChange={(event) => setEmail(event.currentTarget.value)}
           placeholder="Email address"
           type="email"

@@ -67,14 +67,6 @@ function Home(): React.JSX.Element {
         </div>
         <div className="flex j-space-between mt-1 ns">
           <span>
-            Name:
-          </span>
-          <span>
-            { user?.name }
-          </span>
-        </div>
-        <div className="flex j-space-between mt-1 ns">
-          <span>
             Created:
           </span>
           <span>

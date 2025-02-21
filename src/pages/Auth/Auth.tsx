@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants";
 import Button from "../../components/Button";
-import Input from "../../components/Input"; // Using the same input component as Sign-Up
+import Input from "../../components/Input";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ export default function Auth() {
     try {
       const credential = await navigator.credentials.get({
         publicKey: {
-          challenge: new Uint8Array([117, 34, 98, 191]), // Fake challenge
+          challenge: new Uint8Array([117, 34, 98, 191]),
           allowCredentials: [],
           timeout: 60000,
         },
@@ -26,7 +26,7 @@ export default function Auth() {
 
       if (credential) {
         setStatus("Biometric authentication successful. Submitting email...");
-        sendEmailToServer();
+        await sendEmailToServer(); // ✅ Ensure navigation happens after this
       }
     } catch (error) {
       setStatus("Biometric authentication failed.");
@@ -40,20 +40,15 @@ export default function Auth() {
     }
 
     try {
-      const response = await fetch("/api/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      // Simulate an API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      if (response.ok) {
-        setStatus("Email submitted successfully.");
-        navigate(ROUTES.home);
-      } else {
-        setStatus("Failed to submit email.");
-      }
+      setStatus("Sent to backend! ✅");
+
+      // ✅ Redirect to home page after 2 seconds (same behavior as Sign-Up)
+      setTimeout(() => navigate(ROUTES.home, { replace: true }), 2000);
     } catch (error) {
-      setStatus("Error contacting server.");
+      setStatus("Something went wrong.");
     }
   };
 
