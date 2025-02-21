@@ -19,22 +19,10 @@ function Index(): React.JSX.Element {
 
   const navigate = useNavigate()
 
-  const handleSignIn = async () => {
-    try {
-      const result = await navigator.credentials.get({
-        mediation: 'silent',
-        publicKey: { challenge }
-      })
-
-      storeValue<AuthorizedUser>('authorized-user', {
-        id: result?.id || '',
-        isAuthorized: true,
-      })
-      return navigate(ROUTES.home)
-    } catch (error) {
-      return setShowErrorModal(true)
-    }
-  }
+  const handleSignIn = () => {
+    navigate(ROUTES.auth); // Redirect user to the new authentication page
+  };
+  
 
   useEffect(
     () => {

@@ -7,7 +7,7 @@ function Footer(): React.JSX.Element {
     <div className="f f-wrap j-center ai-center ph-1 ns footer">
       <span>
         <a
-          href="https://github.com/peterdee/webauthn-demo"
+          href="https://github.com/sahil-shah0203/hawcx"
           target="_blank"
         >
           WebAuthn demo
@@ -18,17 +18,11 @@ function Footer(): React.JSX.Element {
       </span>
       <span className="ml-half">
         <a
-          href="https://github.com/peterdee"
+          href="https://github.com/sahil-shah0203"
           target="_blank"
         >
-          Peter Dyumin
+          Sahil Shah
         </a>
-      </span>
-      <span className="ml-half">
-        ©
-      </span>
-      <span className="ml-half">
-        { new Date().getFullYear() }
       </span>
     </div>
   )

@@ -6,7 +6,8 @@ interface InputProps {
   classes?: string;
   disabled?: boolean;
   name?: string;
-  onChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  value?: string; // <-- Add this line
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   styles?: object;
   type?: InputType;
@@ -17,6 +18,7 @@ function Input(props: InputProps): React.JSX.Element {
     classes = '',
     disabled = false,
     name = '',
+    value = '',  // default value if needed
     onChange,
     placeholder = '',
     styles = {},
@@ -28,6 +30,7 @@ function Input(props: InputProps): React.JSX.Element {
       className={`input styled-input${classes ? ` ${classes}` : ''}`}
       disabled={disabled}
       name={name}
+      value={value} // <-- Use the value prop here
       onChange={onChange}
       placeholder={placeholder}
       style={styles}
